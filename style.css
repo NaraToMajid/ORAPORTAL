@@ -1,0 +1,557 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    image-rendering: pixelated;
+    image-rendering: crisp-edges;
+}
+
+body {
+    font-family: 'Press Start 2P', cursive;
+    background: #7ec8ff;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+    transition: background 0.4s;
+}
+
+/* NIGHT MODE */
+body.night {
+    background: #0b1f3a;
+}
+
+body.night .cloud {
+    background: #4a5568;
+    border-color: #1a202c;
+}
+
+body.night .cloud::before,
+body.night .cloud::after {
+    background: #4a5568;
+    border-color: #1a202c;
+}
+
+/* AWAN PIXEL */
+.clouds {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40vh;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.cloud {
+    position: absolute;
+    width: min(180px, 25vw);
+    height: min(64px, 8vw);
+    background: #ffffff;
+    border: max(3px, 0.4vw) solid #2d2d2d;
+    box-shadow: inset max(-6px, -1vw) max(-6px, -1vw) 0 #d0d0d0;
+}
+
+.cloud::before {
+    content: '';
+    position: absolute;
+    width: min(90px, 12vw);
+    height: min(64px, 8vw);
+    background: #ffffff;
+    border: max(3px, 0.4vw) solid #2d2d2d;
+    border-bottom: none;
+    top: min(-30px, -4vw);
+    left: min(15px, 2vw);
+    box-shadow: inset max(-5px, -0.8vw) max(-5px, -0.8vw) 0 #d0d0d0;
+}
+
+.cloud::after {
+    content: '';
+    position: absolute;
+    width: min(70px, 10vw);
+    height: min(50px, 6vw);
+    background: #ffffff;
+    border: max(3px, 0.4vw) solid #2d2d2d;
+    border-bottom: none;
+    top: min(-25px, -3vw);
+    right: min(15px, 2vw);
+    box-shadow: inset max(-5px, -0.8vw) max(-5px, -0.8vw) 0 #d0d0d0;
+}
+
+@keyframes cloudmove {
+    from { left: -250px; }
+    to { left: 100%; }
+}
+
+/* BINTANG MALAM */
+.night-stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    transition: opacity 0.4s;
+}
+
+body.night .night-stars {
+    opacity: 1;
+}
+
+.star {
+    position: absolute;
+    background: #fff7b0;
+    width: min(4px, 1vw);
+    height: min(4px, 1vw);
+    box-shadow: 0 0 0 1px #f0f0a0;
+    animation: blink 2.5s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 0.4; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.3); }
+}
+
+/* KONTROL */
+.top-bar {
+    position: sticky;
+    top: 10px;
+    right: 0;
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 15px;
+    gap: 10px;
+    z-index: 100;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.retro-btn {
+    background: #ffd966;
+    border: max(4px, 0.5vw) solid #2d2d2d;
+    padding: clamp(12px, 3vw, 16px) clamp(16px, 4vw, 24px);
+    font-family: 'Press Start 2P', cursive;
+    font-size: clamp(10px, 2.5vw, 12px);
+    cursor: pointer;
+    box-shadow: max(4px, 0.8vw) max(4px, 0.8vw) 0 #1a1a1a;
+    transition: 0.03s linear;
+    color: #1a1a1a;
+}
+
+.retro-btn:active {
+    transform: translate(max(4px, 0.5vw), max(4px, 0.5vw));
+    box-shadow: max(2px, 0.3vw) max(2px, 0.3vw) 0 #1a1a1a;
+}
+
+/* PASSWORD MODAL */
+.password-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+    z-index: 2000;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.password-modal.open {
+    display: flex;
+}
+
+.password-box {
+    background: #ecd89a;
+    border: 8px solid #2d2d2d;
+    padding: 40px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 20px 20px 0 #000;
+}
+
+.password-box h2 {
+    font-size: clamp(14px, 3vw, 20px);
+    margin-bottom: 30px;
+    text-align: center;
+    color: #1a1a1a;
+}
+
+.password-input {
+    width: 100%;
+    padding: 15px;
+    border: 4px solid #000;
+    font-family: inherit;
+    font-size: 14px;
+    background: #ffffe0;
+    margin-bottom: 20px;
+}
+
+.password-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.password-btn {
+    background: #4caf50;
+    border: 4px solid #000;
+    padding: 12px 25px;
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 #000;
+}
+
+.password-btn.cancel {
+    background: #c0392b;
+}
+
+/* PROFIL */
+.profile-block {
+    position: relative;
+    width: fit-content;
+    margin: 20px auto 30px;
+    z-index: 20;
+    animation: bob 1.2s infinite alternate;
+}
+
+@keyframes bob {
+    from { transform: translateY(0); }
+    to { transform: translateY(-10px); }
+}
+
+.profile-pixel {
+    width: min(170px, 35vw);
+    height: min(170px, 35vw);
+    background: #f0e6d2;
+    border: max(5px, 0.8vw) solid #2d2d2d;
+    padding: min(10px, 2vw);
+    box-shadow: max(8px, 1.5vw) max(8px, 1.5vw) 0 #1f1f1f;
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-pixel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-tag {
+    position: absolute;
+    bottom: min(-15px, -2vw);
+    right: min(-15px, -2vw);
+    background: #c0392b;
+    border: max(4px, 0.6vw) solid #2d2d2d;
+    color: white;
+    padding: clamp(8px, 2vw, 12px) clamp(10px, 2.5vw, 16px);
+    font-size: clamp(8px, 2vw, 12px);
+    white-space: nowrap;
+    box-shadow: max(5px, 1vw) max(5px, 1vw) 0 #1a1a1a;
+}
+
+/* LINK PORTAL */
+.links-panel {
+    max-width: 800px;
+    margin: 0 auto 30px;
+    display: flex;
+    flex-direction: column;
+    gap: min(20px, 3vw);
+    padding: 0 15px;
+    position: relative;
+    z-index: 20;
+}
+
+.link-card {
+    background: #f3b33d;
+    border: max(5px, 0.8vw) solid #2d2d2d;
+    padding: clamp(15px, 3vw, 25px) clamp(15px, 3vw, 25px);
+    display: flex;
+    align-items: center;
+    gap: min(15px, 3vw);
+    box-shadow: max(8px, 1.5vw) max(8px, 1.5vw) 0 #1f1f1f;
+    transition: 0.1s;
+    cursor: pointer;
+    text-decoration: none;
+    color: #1f1f1f;
+    width: 100%;
+}
+
+.link-card:hover {
+    background: #5fa85f;
+    color: white;
+    transform: translate(-4px, -4px);
+    box-shadow: max(10px, 2vw) max(10px, 2vw) 0 #1f1f1f;
+}
+
+.link-number {
+    background: #2d2d2d;
+    color: #ffd966;
+    width: min(48px, 10vw);
+    height: min(48px, 10vw);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: max(3px, 0.5vw) solid #000;
+    font-size: clamp(12px, 3vw, 16px);
+    box-shadow: inset -3px -3px 0 #000;
+    flex-shrink: 0;
+}
+
+.link-text {
+    flex: 1;
+    font-size: clamp(10px, 2.5vw, 14px);
+    line-height: 1.6;
+    word-break: break-word;
+}
+
+.link-pokemon-img {
+    width: min(80px, 15vw);
+    height: min(80px, 15vw);
+    object-fit: contain;
+    image-rendering: pixelated;
+    background: transparent !important;
+    flex-shrink: 0;
+    filter: drop-shadow(2px 4px 0 rgba(0,0,0,0.2));
+}
+
+/* TANAH - PANJANG SAMPAI BAWAH */
+.dirt-world {
+    width: 100%;
+    min-height: 100vh;
+    background: #6b4f2a;
+    border-top: max(6px, 1vw) solid #2d2d2d;
+    margin-top: 30px;
+    padding: min(40px, 6vw) min(15px, 3vw) min(100px, 10vw);
+    background-image: 
+        repeating-linear-gradient(45deg, #4a351a 0px, #4a351a 4px, #6b4f2a 4px, #6b4f2a 12px);
+    box-shadow: inset 0 20px 0 #4a351a;
+    position: relative;
+    z-index: 10;
+    padding-bottom: 150px;
+}
+
+.grass-edge {
+    position: absolute;
+    top: -20px;
+    left: 0;
+    width: 100%;
+    height: min(25px, 4vw);
+    background: #4caf50;
+    border-bottom: max(4px, 0.6vw) solid #2d2d2d;
+    border-top: max(4px, 0.6vw) solid #2d2d2d;
+    background-image: repeating-linear-gradient(90deg, #2d2d2d 0px, #2d2d2d 4px, transparent 4px, transparent 32px);
+}
+
+.gallery-title {
+    text-align: center;
+    color: white;
+    text-shadow: max(4px, 0.8vw) max(4px, 0.8vw) 0 #000;
+    font-size: clamp(14px, 4vw, 22px);
+    margin-bottom: min(30px, 5vw);
+}
+
+.pokemon-collection {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(140px, 40vw), 1fr));
+    gap: min(20px, 3vw);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.poke-card {
+    background: #b88b4b;
+    border: max(4px, 0.6vw) solid #2d2d2d;
+    padding: min(15px, 2vw) min(10px, 1.5vw) min(12px, 1.8vw);
+    box-shadow: max(6px, 1vw) max(6px, 1vw) 0 #1f1f1f;
+    transform: rotate(var(--r, 0deg));
+    transition: 0.2s;
+    cursor: pointer;
+    text-align: center;
+}
+
+.poke-card:hover {
+    transform: scale(1.05) rotate(0deg);
+    box-shadow: max(8px, 1.5vw) max(8px, 1.5vw) 0 #1f1f1f;
+}
+
+.poke-card img {
+    width: min(100px, 25vw);
+    height: min(100px, 25vw);
+    object-fit: contain;
+    margin: 0 auto;
+}
+
+.poke-card .name {
+    font-size: clamp(8px, 2vw, 10px);
+    margin-top: 10px;
+    color: white;
+    text-shadow: 2px 2px 0 #000;
+    word-break: break-word;
+}
+
+.poke-card .number {
+    font-size: clamp(6px, 1.5vw, 8px);
+    color: #ffd966;
+    margin-top: 5px;
+}
+
+/* LOADING */
+.loading {
+    text-align: center;
+    color: white;
+    font-size: clamp(10px, 2.5vw, 14px);
+    padding: 20px;
+}
+
+/* FILE UPLOAD */
+.file-upload {
+    display: none;
+}
+
+/* HALAMAN EDIT */
+.edit-screen {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.95);
+    z-index: 1000;
+    display: none;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.edit-screen.open {
+    display: block;
+}
+
+.edit-window {
+    max-width: min(950px, 95vw);
+    margin: 0 auto;
+    background: #ecd89a;
+    border: max(6px, 1vw) solid #2d2d2d;
+    padding: min(30px, 4vw);
+    box-shadow: max(15px, 2vw) max(15px, 2vw) 0 #000;
+}
+
+.edit-window h2 {
+    font-size: clamp(16px, 4vw, 26px);
+    margin-bottom: 30px;
+    text-align: center;
+    color: #1a1a1a;
+    text-shadow: 3px 3px 0 #b88b4b;
+}
+
+.edit-block {
+    background: #f5e6b0;
+    border: 4px solid #000;
+    padding: min(20px, 3vw);
+    margin-bottom: 30px;
+}
+
+.edit-block h3 {
+    font-size: clamp(12px, 3vw, 16px);
+    margin-bottom: 20px;
+}
+
+.profile-edit-row {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.profile-edit-preview {
+    width: 80px;
+    height: 80px;
+    border: 4px solid #000;
+    background: #fff;
+    padding: 5px;
+}
+
+.profile-edit-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.link-edit-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff3c9;
+    border: 3px solid #000;
+    padding: 15px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.link-edit-item input {
+    flex: 1;
+    min-width: 120px;
+    padding: 12px;
+    border: 3px solid #000;
+    font-family: inherit;
+    font-size: clamp(8px, 2vw, 12px);
+    background: #ffffe0;
+}
+
+.link-edit-item input[type="number"] {
+    width: 100px;
+    flex: 0 0 auto;
+}
+
+.link-edit-item button {
+    background: #c0392b;
+    border: 3px solid #000;
+    padding: 10px 15px;
+    font-family: inherit;
+    font-size: clamp(8px, 2vw, 10px);
+    cursor: pointer;
+    color: white;
+}
+
+.gallery-edit-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin: 15px 0;
+    justify-content: center;
+}
+
+.gallery-edit-grid img {
+    width: min(70px, 15vw);
+    height: min(70px, 15vw);
+    border: 3px solid #000;
+    background: #b88b4b;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.edit-btn {
+    background: #4caf50;
+    border: 4px solid #000;
+    padding: clamp(12px, 2.5vw, 18px) clamp(20px, 4vw, 30px);
+    font-family: inherit;
+    font-size: clamp(10px, 2.5vw, 14px);
+    cursor: pointer;
+    margin: 5px;
+    box-shadow: 4px 4px 0 #000;
+}
+
+.edit-btn.close {
+    background: #e67e22;
+    float: right;
+}
+
+.upload-btn {
+    background: #4a90e2;
+    border: 4px solid #000;
+    padding: 12px 20px;
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+    box-shadow: 4px 4px 0 #000;
+}
