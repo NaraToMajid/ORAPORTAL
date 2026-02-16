@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>POKEMON WORLD · 8BIT</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- AWAN -->
+    <div class="clouds" id="cloudLayer"></div>
+
+    <!-- BINTANG MALAM -->
+    <div class="night-stars" id="starField"></div>
+
+    <!-- PASSWORD MODAL -->
+    <div class="password-modal" id="passwordModal">
+        <div class="password-box">
+            <h2>MASUKKAN PASSWORD</h2>
+            <input type="password" id="passwordInput" class="password-input" placeholder="********">
+            <div class="password-buttons">
+                <button class="password-btn" id="submitPassword">MASUK</button>
+                <button class="password-btn cancel" id="cancelPassword">BATAL</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOP BAR -->
+    <div class="top-bar">
+        <button class="retro-btn" id="nightToggleBtn">MALAM</button>
+        <button class="retro-btn" id="editOpenBtn">EDIT</button>
+    </div>
+
+    <!-- PROFIL -->
+    <div class="profile-block">
+        <div class="profile-pixel">
+            <img id="profileImg" src="" alt="trainer">
+        </div>
+        <div class="profile-tag" id="profileTag">LOADING...</div>
+    </div>
+
+    <!-- LINK PORTAL -->
+    <div class="links-panel" id="linksPanel">
+        <div class="loading">MEMUAT DATA...</div>
+    </div>
+
+    <!-- TANAH + GALERI (PANJANG SAMPAI BAWAH) -->
+    <div class="dirt-world">
+        <div class="grass-edge"></div>
+        <h2 class="gallery-title">POKEMON COLLECTION</h2>
+        <div class="pokemon-collection" id="pokemonGallery">
+            <div class="loading">MEMUAT POKEMON...</div>
+        </div>
+    </div>
+
+    <!-- HALAMAN EDIT -->
+    <div class="edit-screen" id="editScreen">
+        <div class="edit-window">
+            <h2>EDIT PORTAL</h2>
+            
+            <!-- EDIT PROFIL -->
+            <div class="edit-block">
+                <h3>PROFIL</h3>
+                <div class="profile-edit-row">
+                    <div class="profile-edit-preview">
+                        <img id="editProfilePreview" src="" alt="preview">
+                    </div>
+                    <div style="flex:1; min-width: 200px;">
+                        <label style="font-size:10px;">NAMA TRAINER</label>
+                        <input type="text" id="editTrainerName" value="" style="width:100%; padding:12px; border:4px solid #000; font-family:inherit; margin-bottom:10px;">
+                        <button class="upload-btn" id="editUploadBtn">UPLOAD FOTO</button>
+                        <input type="file" id="editFileUpload" class="file-upload" accept="image/*">
+                    </div>
+                </div>
+            </div>
+
+            <!-- EDIT LINK -->
+            <div class="edit-block">
+                <h3>LINK PORTAL</h3>
+                <div id="linkEditContainer"></div>
+                <button class="edit-btn" id="addLinkBtn">+ TAMBAH LINK</button>
+            </div>
+
+            <!-- EDIT GALERI -->
+            <div class="edit-block">
+                <h3>GALERI POKEMON (klik gambar untuk hapus)</h3>
+                <div class="gallery-edit-grid" id="galleryEditGrid"></div>
+                <button class="edit-btn" id="addPokemonBtn">+ TAMBAH RANDOM</button>
+                <button class="edit-btn" id="syncPokemonBtn">↻ SYNC DARI API</button>
+            </div>
+
+            <!-- TOMBOL SIMPAN -->
+            <button class="edit-btn close" id="saveEditBtn">SIMPAN & TUTUP</button>
+            <button class="edit-btn close" style="background: #666;" id="closeEditBtn">TUTUP</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+</body>
+</html>
