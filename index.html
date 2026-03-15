@@ -1,166 +1,217 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALMAJIDNAFI</title>
-    <style>
-        body { margin: 0; overflow: hidden; background-color: #050505; cursor: none; }
-        canvas { display: block; }
-        /* Efek Vignet agar layar terasa seperti monitor tabung retro/sinematik */
-        body::after {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: radial-gradient(circle, rgba(0,0,0,0) 40%, rgba(0,0,0,0.8) 100%);
-            pointer-events: none;
-            z-index: 10;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Al'Majid Nafi Rambe</title>
+
+  <!-- Favicon: logo AM -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23080808'/%3E%3Crect x='1' y='1' width='30' height='30' rx='6.5' fill='none' stroke='%23c9a84c' stroke-width='.9'/%3E%3Ctext x='16' y='22' font-family='Georgia%2Cserif' font-size='14.5' font-weight='700' fill='%23c9a84c' text-anchor='middle' letter-spacing='-1'%3EAM%3C/text%3E%3C/svg%3E">
+
+  <!-- Fonts & Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Syne+Mono&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap">
+
+  <!-- External CSS -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<script type="importmap">
-    {
-        "imports": {
-            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-            "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-        }
-    }
-</script>
+<!-- NAVBAR -->
+<nav id="navbar">
+  <div class="nav-wrap">
+    <div class="nav-logo">AM<span>.</span></div>
+    <nav class="nav-center" id="nav-center"></nav>
+    <div class="nav-right">
+      <a href="https://github.com/NaraToMajid" target="_blank" rel="noopener" class="nav-gh">
+        <i class="fa-brands fa-github"></i>GitHub
+      </a>
+      <button class="theme-btn" id="theme-btn" aria-label="Ganti tema">
+        <i class="fa-solid fa-moon" id="theme-icon"></i>
+      </button>
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
 
-<script type="module">
-    import * as THREE from 'three';
-    import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
-    import { FontLoader } from 'three/addons/loaders/FontLoader.js';
-    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-    import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-    import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-    import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobile-nav">
+  <a href="#home" class="mob-link">Home</a>
+  <a href="#about" class="mob-link">About</a>
+  <a href="#location" class="mob-link">Location</a>
+  <a href="#help" class="mob-link">Help</a>
+  <a href="https://github.com/NaraToMajid" target="_blank" rel="noopener" class="mob-gh">
+    <i class="fa-brands fa-github"></i>GitHub
+  </a>
+</div>
 
-    // 1. SETUP SUPERIOR
-    const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x050505, 0.02); // Kabut pekat di kejauhan
+<!-- HERO SECTION -->
+<section id="home">
+  <div class="batik-bg"></div>
+  <div class="container z1">
+    <div class="hero-grid section-pad">
+      <!-- Left Column -->
+      <div>
+        <div class="hero-eyebrow rv">
+          <div class="hero-eyebrow-line"></div>
+          <span class="hero-eyebrow-text" id="h-tag"></span>
+        </div>
+        <h1 class="hero-h1 rv d1" id="h-name"></h1>
+        <div class="hero-roles rv d2" id="h-roles"></div>
+        <div class="hero-cta-row rv d3" id="h-cta"></div>
+        <div class="soc-row rv d3" style="margin-top:40px" id="h-socs"></div>
 
-    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(0, 1.5, 14);
+        <!-- Clock + Badge -->
+        <div class="hero-clock-wrap rv d4">
+          <div class="clock-card">
+            <i class="fa-solid fa-clock clock-icon"></i>
+            <div>
+              <div class="clock-time" id="clock-time">00:00:00</div>
+              <div class="clock-date" id="clock-date"></div>
+            </div>
+          </div>
+          <div class="pemula-badge">
+            <i class="fa-solid fa-seedling"></i>
+            <span class="pemula-text">Masih Pemula Baru Belajar</span>
+          </div>
+        </div>
+      </div>
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
-    document.body.appendChild(renderer.domElement);
+      <!-- Right Column / Photo -->
+      <div class="hero-photo-col rr">
+        <div class="photo-wrap" id="h-photo">
+          <div class="photo-dot"></div>
+          <div class="stat-strip" id="h-stats"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    // 2. ENDLESS SYNTHWAVE GRID (Lantai Neon)
-    const gridHelper = new THREE.GridHelper(200, 100, 0xff00ff, 0x003344);
-    gridHelper.position.y = -3;
-    scene.add(gridHelper);
+<!-- ABOUT SECTION -->
+<section id="about">
+  <div class="batik-bg"></div>
+  <div class="container z1 section-pad">
+    <div class="about-grid">
+      <!-- Photo Column -->
+      <div class="about-photo-col rl">
+        <div class="about-img" id="a-img"></div>
+        <div class="about-age-badge" id="a-badge"></div>
+      </div>
 
-    // 3. CURSOR TRACKER (Cahaya mengikuti mouse)
-    const mouseLight = new THREE.PointLight(0xffffff, 300, 20);
-    scene.add(mouseLight);
-    
-    // Core Lighting
-    scene.add(new THREE.AmbientLight(0x111122));
-    const cyanLight = new THREE.PointLight(0x00ffff, 200, 30);
-    cyanLight.position.set(-5, 5, 5);
-    scene.add(cyanLight);
+      <!-- Text Column -->
+      <div class="about-text">
+        <div class="sec-eyebrow rv">Tentang Saya</div>
+        <h2 class="sec-title rv d1" id="a-title"></h2>
+        <div id="a-bio"></div>
+        <div class="gold-line rv d2"></div>
 
-    // 4. LOAD FONT & BUAT MULTI-LAYER TEXT
-    let textGroup = new THREE.Group();
-    scene.add(textGroup);
+        <div class="skills-block rv d2">
+          <div class="block-label">Keahlian</div>
+          <div class="chip-row" id="a-skills"></div>
+        </div>
 
-    const loader = new FontLoader();
-    loader.load('https://unpkg.com/three@0.160.0/examples/fonts/helvetiker_bold.typeface.json', (font) => {
-        const textGeo = new TextGeometry('ALMAJIDNAFI', {
-            font: font, size: 1.5, height: 0.4, curveSegments: 32,
-            bevelEnabled: true, bevelThickness: 0.05, bevelSize: 0.02, bevelSegments: 16
-        });
-        textGeo.center();
+        <div class="skills-block rv d3" style="margin-top:18px">
+          <div class="block-label">Tech Stack</div>
+          <div class="tech-row" id="a-tech"></div>
+        </div>
 
-        // LAYER 1: Inti Padat (Material Gelap Metalik)
-        const coreMat = new THREE.MeshStandardMaterial({
-            color: 0x111111, metalness: 1.0, roughness: 0.1
-        });
-        const coreMesh = new THREE.Mesh(textGeo, coreMat);
-        
-        // LAYER 2: Wireframe Holografik (Aura Neon)
-        const wireMat = new THREE.MeshBasicMaterial({
-            color: 0x00ffff, wireframe: true, transparent: true, opacity: 0.3
-        });
-        const wireMesh = new THREE.Mesh(textGeo, wireMat);
-        wireMesh.scale.set(1.02, 1.02, 1.02); // Sedikit lebih besar dari inti
+        <div class="info-cards rv d4" id="a-info"></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        textGroup.add(coreMesh);
-        textGroup.add(wireMesh);
-    });
+<!-- LOCATION SECTION -->
+<section id="location">
+  <div class="batik-bg"></div>
+  <div class="container z1 section-pad">
+    <div class="sec-eyebrow rv">Lokasi</div>
+    <h2 class="sec-title rv d1">Rantauprapat,<br><em>Sumatera Utara</em></h2>
+    <div class="loc-grid">
+      <div class="loc-list" id="loc-list"></div>
+      <div class="map-frame rv d2">
+        <div class="map-badge">
+          <i class="fa-solid fa-location-dot"></i>Rantauprapat
+        </div>
+        <iframe
+          src="https://www.openstreetmap.org/export/embed.html?bbox=99.8077%2C2.0546%2C99.8437%2C2.0846&layer=mapnik&marker=2.0763%2C99.8298"
+          allowfullscreen loading="lazy"
+          title="Lokasi Al'Majid — Rantauprapat">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
 
-    // 5. POST-PROCESSING: BLOOM OVERDRIVE
-    const composer = new EffectComposer(renderer);
-    composer.addPass(new RenderPass(scene, camera));
-    
-    // Bloom: Strength ditingkatkan, Threshold diturunkan agar semuanya bersinar
-    const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 2.5, 0.8, 0.05);
-    composer.addPass(bloomPass);
+<!-- HELP / CONTACT SECTION -->
+<section id="help">
+  <div class="batik-bg"></div>
+  <div class="container z1 section-pad">
+    <div class="help-grid">
+      <!-- Contact Info -->
+      <div>
+        <div class="sec-eyebrow rv">Hubungi Saya</div>
+        <h2 class="sec-title rv d1" id="hp-title"></h2>
+        <div class="contact-list" id="hp-cards"></div>
+        <div class="soc-row rv" id="hp-socs"></div>
+      </div>
 
-    // 6. KONTROL DAN INTERAKSI
-    const controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.02;
-    controls.maxPolarAngle = Math.PI / 2 + 0.1; // Jangan sampai tembus lantai bawah
+      <!-- Form -->
+      <div class="form-card rv d2">
+        <h3 class="form-card-title">Kirim Pesan</h3>
+        <p class="form-card-sub">Isi form berikut, saya akan segera membalas.</p>
+        <form id="contact-form" novalidate>
+          <div class="fg-2">
+            <div class="fg">
+              <label>Nama</label>
+              <input type="text" id="f-name" placeholder="Nama Anda" required>
+            </div>
+            <div class="fg">
+              <label>Email</label>
+              <input type="email" id="f-email" placeholder="email@anda.com" required>
+            </div>
+          </div>
+          <div class="fg">
+            <label>Jenis Kolaborasi</label>
+            <select id="f-type">
+              <option value="">Pilih jenis...</option>
+              <option>Web Development</option>
+              <option>Visual Design</option>
+              <option>Photography</option>
+              <option>Videography</option>
+              <option>Video Editing</option>
+              <option>Konsultasi</option>
+              <option>Lainnya</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label>Pesan</label>
+            <textarea id="f-msg" placeholder="Ceritakan proyek atau ide Anda..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-gold" style="width:100%;justify-content:center">
+            <i class="fa-solid fa-paper-plane"></i>Kirim Pesan
+          </button>
+          <div class="form-msg" id="form-msg"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
 
-    // Mouse Tracking (Koordinat dinormalisasi -1 sampai 1)
-    let mouseX = 0, mouseY = 0;
-    document.addEventListener('mousemove', (event) => {
-        mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-        mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
-    });
+<!-- FOOTER -->
+<footer>
+  <div class="foot-wrap">
+    <div class="foot-logo" id="f-logo"></div>
+    <p class="foot-copy" id="f-copy"></p>
+    <div class="foot-socs" id="f-socs"></div>
+  </div>
+</footer>
 
-    window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        composer.setSize(window.innerWidth, window.innerHeight);
-    });
-
-    // 7. RENDER LOOP (Animasi Dewa)
-    const clock = new THREE.Clock();
-    function animate() {
-        requestAnimationFrame(animate);
-        const t = clock.getElapsedTime();
-
-        // A. Animasi Lantai Bergerak Maju (Endless Grid)
-        // Memanfaatkan modulus agar kembali ke titik awal tanpa terlihat patah
-        gridHelper.position.z = (t * 8) % 2;
-
-        // B. Mouse Light Tracking (Cahaya menempel di layar bayangan mouse)
-        mouseLight.position.x = mouseX * 10;
-        mouseLight.position.y = mouseY * 10;
-        mouseLight.position.z = 8; // Tetap di depan teks
-
-        // C. Animasi Teks Kompleks
-        if (textGroup.children.length > 0) {
-            // Efek Melayang Halus
-            textGroup.position.y = Math.sin(t * 1.5) * 0.3;
-            
-            // Efek Bernafas (Skala membesar dan mengecil perlahan)
-            const scale = 1 + Math.sin(t * 3) * 0.015;
-            textGroup.scale.set(scale, scale, scale);
-
-            // Rotasi Mengikuti Mouse + Goyangan Alami
-            textGroup.rotation.x = Math.sin(t) * 0.05 + mouseY * 0.2;
-            textGroup.rotation.y = Math.cos(t * 0.8) * 0.05 + mouseX * 0.3;
-
-            // Wireframe berkedip seperti hologram glitch
-            textGroup.children[1].material.opacity = 0.2 + Math.random() * 0.2;
-            // Warna Wireframe berubah antara Cyan dan Magenta perlahan
-            textGroup.children[1].material.color.setHSL((Math.sin(t * 0.5) + 1) * 0.5 * 0.2 + 0.5, 1, 0.5);
-        }
-
-        controls.update();
-        composer.render();
-    }
-    
-    animate();
-</script>
+<!-- External JavaScript -->
+<script src="script.js"></script>
 </body>
 </html>
